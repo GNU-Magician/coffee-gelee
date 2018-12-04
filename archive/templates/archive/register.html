@@ -1,0 +1,50 @@
+{% extends 'archive_template/index.html' %}
+{% load myfilters %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+    <div class="create">
+        <div class="create__head">
+            <div class="create__title">Register</div>
+
+
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+         <div class="create__section">
+                <label class="create__label" for="">{{ form.username.label }}</label>
+                {{ form.username|addclass:'form-control' }}
+
+            </div>
+            <div class="create__section">
+                <label class="create__label" for="">{{ form.password.label }}</label>
+                {{ form.password|addclass:'form-control' }}
+
+            </div>
+                     <div class="create__section">
+                <label class="create__label" for="">{{ form.email.label }}</label>
+                {{ form.email|addclass:'form-control' }}
+
+            </div>
+            <a href="{% url 'archive:index' %}" class="create__btn-cansel btn">Cancel</a>
+            <input type="submit" class="create__btn-create btn btn--type-02" value="Register">
+        </form>
+            {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    {{ error }}
+                {% endfor %}
+            {% endfor %}
+
+        {% endif %}
+    </div>
+{% endblock %}
+</body>
+</html>

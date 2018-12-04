@@ -1,0 +1,65 @@
+{% extends 'archive_template/index.html' %}
+{% load myfilters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+{% block content %}
+    <div class="create">
+        <div class="create__head">
+            <div class="create__title">Update Post</div>
+        </div>
+        <form enctype="multipart/form-data" method="post" action="#">
+        {% csrf_token %}
+            <div class="create__section">
+                <label class="create__label" for="">{{ form.name.label }}</label>
+                {{ form.name|addclass:'form-control' }}
+
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="create__section">
+                            <label class="create__label" for="category">{{ form.category.label }}</label>
+                            {{ form.category|addclass:'form-control' }}
+                    </div>
+                </div>
+            </div>
+            <div class="create__section create__textarea">
+                <label class="create__label" for="description">{{ form.description.label }}</label>
+                {{ form.description|addclass:'form-control' }}
+
+            </div>
+            <div class="create__section">
+                <label class="create__label" for="sub-category">{{ form.file.label }}</label>
+                {{ form.file }}
+            </div>
+            <div class="create__advanced">
+                <div class="row">
+                </div>
+            </div>
+            <div class="create__footer">
+                {% if perms.post.can_view_posts %}
+                    <div class="col-lg-4 col-xl-4">
+                        <div class="create__section">
+                            <label class="create__label">{{ form.can_see.label }}</label>
+                            {{ form.can_see|addclass:'form-control' }}
+                        </div>
+
+                    </div>
+
+                {% endif %}
+                                <a href="{% url 'archive:index' %}" class="create__btn-cansel btn">Cancel</a>
+                    <input type="submit" class="create__btn-create btn btn--type-02" value="Create Post">
+            </div>
+
+
+
+        </form>
+    </div>
+{% endblock %}
+</body>
+</html>

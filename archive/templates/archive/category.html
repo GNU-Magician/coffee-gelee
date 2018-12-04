@@ -1,0 +1,115 @@
+{% extends 'archive_template/index.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{% block nav %}
+<div class="nav">
+                <div class="nav__categories js-dropdown">
+                    <div class="nav__select">
+                        <div class="btn-select" data-dropdown-btn="categories">All Categories</div>
+                        <nav class="dropdown dropdown--design-01" data-dropdown-list="categories">
+                            <ul class="dropdown__catalog row">
+                                {% block category_list2 %}
+                                    {% for category in categories %}
+                                        <li class="col-xs-6"><a href="{% url 'archive:category' category.id %}" class="category">
+                                            <i class="bg-f9bc64"></i> {{ category }}</a></li>
+                                    {% endfor %}
+
+
+                                {% endblock %}
+
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="nav__select">
+
+                    </div>
+                </div>
+
+                <div class="nav__menu js-dropdown">
+                    <div class="nav__select">
+                        <div class="btn-select" data-dropdown-btn="menu">Latest</div>
+                        <div class="dropdown dropdown--design-01" data-dropdown-list="menu">
+                            <ul class="dropdown__catalog">
+                                <li><a href="#">Latest</a></li>
+                                <li><a href="#">Oldest</a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+
+                    <ul>
+                        <li class="active"><a href="#">Latest</a></li>
+
+                    </ul>
+                </div>
+            </div>
+{% endblock %}
+{% block content %}
+    <div class="posts__item">
+
+            <div class="posts__section-left">
+                <div class="posts__topic">
+                    <div class="posts__content">
+                            <h4>{{ category }}</h4>
+                        <p>{{ category.description }}</p>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    <div class="posts__head">
+        <div class="posts__topic">Topic</div>
+        <div class="posts__category">Category</div>
+        <div class="posts__users">Writer</div>
+        <div class="posts__replies">Size</div>
+
+    </div>
+
+    {% for post in posts %}
+        {% if forloop.counter0|divisibleby:2 %}
+
+        <div class="posts__item bg-f2f4f6">
+            {% else %}
+        <div class="posts__item">
+        {% endif %}
+
+            <div class="posts__section-left">
+                <div class="posts__topic">
+                    <div class="posts__content">
+                        <a href="{% url 'archive:post_detail' post.id %}">
+                            <h3>{{ post.name }}</h3>
+                        </a>
+                        <div class="posts__tags tags">
+                            {{ post.can_view }}
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="posts__category"><a href="#" class="category">{{ post.category }}</a></div>
+            </div>
+
+            <div class="posts__section-right">
+                <div class="posts__users">
+                    <div>
+                        <a href="#">{{ post.user }}</a>
+                    </div>
+
+                </div>
+                <div class="posts__replies">{{ post.file.size }}</div>
+
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+</body>
+</html>

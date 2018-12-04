@@ -1,0 +1,175 @@
+{% load static %}
+<!doctype html>
+<html lang="en-US">
+
+<!-- Mirrored from www.azyrusthemes.com/forum2/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 16 Nov 2018 20:47:04 GMT -->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+    <meta name="keywords" content="HTML5 Template">
+    <meta name="description" content="Responsive HTML5 Template">
+    <meta name="author" content="author.com">
+    <title>Responsive HTML5 Template</title>
+
+    <!-- STYLESHEET -->
+    <!-- fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+    <link href="../../fonts.googleapis.com/css54b4.css?family=Nunito+Sans:300,400,600,700,800" rel="stylesheet">
+
+    <!-- icon -->
+    <link rel="stylesheet" href="{% static 'archive/fonts/icons/main/mainfont/style.css' %}">
+    <link rel="stylesheet" href="{% static 'archive/fonts/icons/font-awesome/css/font-awesome.min.css' %}">
+
+    <!-- Vendor -->
+    <link rel="stylesheet" href="{% static 'archive/vendor/bootstrap/v3/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'archive/vendor/bootstrap/v4/bootstrap-grid.css' %}">
+    <!-- Custom -->
+    <link rel="stylesheet" href="{% static 'archive/css/style.css' %}">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]-->
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header js-header js-dropdown">
+            <div class="container">
+                <div class="header__log-btn">
+                    <a href="{% url 'archive:index' %}"><h5><p id="text_icon">Coffeé Geleé</p></h5></a>
+
+                    <div class="header__logo-btn" data-dropdown-btn="logo">
+
+                    </div>
+
+                </div>
+                <div class="header__search">
+
+                    <form action="#">
+                        <label>
+                            <i class="icon-Search js-header-search-btn-open"></i>
+                            <input type="search" placeholder="Search all forums" class="form-control" id="tags">
+                        </label>
+                    </form>
+                    <div class="header__search-close js-header-search-btn-close"><i class="icon-Cancel"></i></div>
+                    <div class="header__search-btn">
+                        <a href="{% url 'archive:create_post' %}">Create</a>
+                    </div>
+                    <div class="dropdown dropdown--design-01" data-dropdown-list="search">
+                        <ul>
+                            <li>
+                                <label>
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" checked="checked">
+                                        <i></i>
+                                    </label>Search Titles Only
+                                </label>
+
+                            </li>
+                            <li>
+                                <label>
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox">
+                                        <i></i>
+                                    </label>Show Results as Posts
+                                </label>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="icon-Advanced_Search"></i>Advanced Search
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="header__menu">
+                    <div class="header__menu-btn" data-dropdown-btn="menu">
+                        Latest Topics<i class="icon-Menu_Icon"></i>
+                    </div>
+                    <nav class="dropdown dropdown--design-01" data-dropdown-list="menu">
+                        <div>
+                            <ul class="dropdown__catalog row">
+                                <li class="col-xs-6"><a href="{% url 'archive:create_post' %}">New</a></li>
+                                <li class="col-xs-6"><a href="{% url 'archive:index' %}">Latest</a></li>
+                                <li class="col-xs-6"><a href="#">Oldest</a></li>
+                                <li class="col-xs-6"><a href="{% url 'archive:create_category' %}">Create Category</a></li>
+
+                            </ul>
+                        </div>
+
+                        <div>
+                            <ul class="dropdown__catalog row">
+                                {% if not user.is_authenticated %}
+                                    <li class="col-xs-6"><a href="{% url 'archive:register_user' %}">Register</a></li>
+                                {% else %}
+                                {% endif %}
+                                {% if user.is_authenticated %}
+                                    <li class="col-xs-6"><a href="{% url 'logout' %}">Logout</a></li>
+                                {% else %}
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+
+                <div class="header__user" style="color: #31b0d5; font-family: 'Lobster', cursive; font-size:25px;">
+                        {% if user.is_authenticated %}
+                        {{ user }}
+                        {% else %}
+                        <a href="{% url 'login' %}">Login</a>
+                        {% endif %}
+
+
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- MAIN -->
+    <main>
+        <div class="container">
+            {% block nav %}
+
+            {% endblock %}
+            <div class="posts">
+                <div class="posts__body">
+
+                {% block content %}
+
+                    {% endblock %}
+
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+
+
+    <!-- JAVA SCRIPT -->
+    <script src="{% static 'archive/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'archive/vendor/velocity/velocity.min.js' %}"></script>
+    <script src="{% static 'archive/js/app.js' %}"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    {% block javascript %}
+        <script>
+  $( function() {
+    var availableTags = [
+        {% block str_tag %}
+        {% endblock %}
+    ];
+    $( "#tags" ).autocomplete({
+      source: availableTags
+    });
+  } );
+        </script>
+{% endblock %}
+</body>
+
+<!-- Mirrored from www.azyrusthemes.com/forum2/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 16 Nov 2018 20:47:04 GMT -->
+</html>

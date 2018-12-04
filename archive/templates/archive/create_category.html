@@ -1,0 +1,46 @@
+{% extends 'archive_template/index.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+    <div class="create">
+                <div class="create__head">
+                    <div class="create__title">Create New Category</div>
+                </div>
+    <form method="post" action="#">
+        {% csrf_token %}
+                <div class="create__section">
+                    <label class="create__label" for="title">Category Title</label>
+                    <input type="text" class="form-control" id="title" placeholder="Add here" name="name">
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+
+                    </div>
+
+                </div>
+                <div class="create__section create__textarea">
+                    <label class="create__label" for="description">Description</label>
+
+                    <textarea name="descript" class="form-control" id="description" placeholder="Short description here"></textarea>
+                </div>
+
+                <div class="create__advanced">
+                    <div class="row">
+                    </div>
+                </div>
+                <input type="hidden" value="{{ user.id }}" name="user_obj">
+                <div class="create__footer">
+
+                    <a href="{% url 'archive:index' %}" class="create__btn-cansel btn">Cancel</a>
+                    <input type="submit" class="create__btn-create btn btn--type-02" value="Create Category">
+                </div>
+    </form>
+            </div>
+{% endblock %}
+</body>
+</html>
